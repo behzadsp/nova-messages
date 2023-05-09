@@ -1,10 +1,10 @@
 <?php
 
-namespace KirschbaumDevelopment\NovaComments\Nova;
+namespace BehzadSp\NovaMessages\Nova;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
-use KirschbaumDevelopment\NovaComments\Models\Comment as CommentModel;
+use BehzadSp\NovaMessages\Models\Message as MessageModel;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\MorphTo;
@@ -13,14 +13,14 @@ use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Resource;
 
-class Comment extends Resource
+class Message extends Resource
 {
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = CommentModel::class;
+    public static $model = MessageModel::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -35,7 +35,7 @@ class Comment extends Resource
      * @var array
      */
     public static $search = [
-        'comment',
+        'message',
     ];
 
     /**
@@ -44,19 +44,19 @@ class Comment extends Resource
     public function fields(NovaRequest $request): array
     {
         return [
-            Textarea::make('comment')
+            Textarea::make('message')
                 ->alwaysShow()
                 ->hideFromIndex(),
 
-            MorphTo::make('Commentable')->onlyOnIndex(),
+            MorphTo::make('Messagble')->onlyOnIndex(),
 
-            Text::make('comment')
-                ->displayUsing(function ($comment) {
-                    return Str::limit($comment, config('nova-comments.limit'));
+            Text::make('message')
+                ->displayUsing(function ($message) {
+                    return Str::limit($message, config('nova-messages.limit'));
                 })
                 ->onlyOnIndex(),
 
-            BelongsTo::make('Commenter', 'commenter', config('nova-comments.commenter.nova-resource'))
+            BelongsTo::make('Messager', 'messager', config('nova-messages.messager.nova-resource'))
                 ->exceptOnForms(),
 
             DateTime::make('Created', 'created_at')
@@ -102,6 +102,6 @@ class Comment extends Resource
      */
     public static function availableForNavigation(Request $request): bool
     {
-        return config('nova-comments.available-for-navigation');
+        return config('nova-messages.available-for-navigation');
     }
 }

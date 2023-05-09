@@ -1,8 +1,8 @@
 <template>
-    <div class="commenter__comment py-4 border-t border-40">
+    <div class="messager__message py-4 border-t border-40">
         <div class="font-light text-80 text-sm">
-            <template v-if="hasCommenter">
-                <a class="link-default" :href="commenterUrl" v-text="commenter"></a>
+            <template v-if="hasMessager">
+                <a class="link-default" :href="messagerUrl" v-text="messager"></a>
 
                 said
             </template>
@@ -14,7 +14,7 @@
             {{ date }}
         </div>
 
-        <div class="mt-2" v-html="commentString"></div>
+        <div class="mt-2" v-html="messageString"></div>
     </div>
 </template>
 
@@ -22,30 +22,30 @@
 
     export default {
         props: {
-            comment: {
+            message: {
                 type: Object,
                 required: true
             }
         },
 
         computed: {
-            commentString() {
-                return _.find(this.comment.fields, { attribute: 'comment' }).value;
+            messageString() {
+                return _.find(this.message.fields, { attribute: 'message' }).value;
             },
 
-            commenter() {
-                return _.find(this.comment.fields, { attribute: 'commenter' }).value;
+            messager() {
+                return _.find(this.message.fields, { attribute: 'messager' }).value;
             },
 
-            commenterUrl() {
-                let commenterId = _.find(this.comment.fields, { attribute: 'commenter' }).belongsToId;
+            messagerUrl() {
+                let messagerId = _.find(this.message.fields, { attribute: 'messager' }).belongsToId;
 
-                return `${Nova.config("base")}/resources/users/${commenterId}`;
+                return `${Nova.config("base")}/resources/users/${messagerId}`;
             },
 
             date() {
                 let now = moment();
-                let date = moment.utc(_.find(this.comment.fields, { attribute: 'created_at' }).value)
+                let date = moment.utc(_.find(this.message.fields, { attribute: 'created_at' }).value)
                     .tz(moment.tz.guess());
 
                 if (date.isSame(now, 'minute')) {
@@ -63,8 +63,8 @@
                 return `on ${date.format('ll')}`;
             },
 
-            hasCommenter() {
-                return Boolean(this.commenter);
+            hasMessager() {
+                return Boolean(this.messager);
             }
         }
     }

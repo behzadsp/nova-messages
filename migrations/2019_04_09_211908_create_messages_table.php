@@ -4,18 +4,18 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCommentsTable extends Migration
+class CreateMessagesTable extends Migration
 {
     /**
      * Run the migrations.
      */
     public function up()
     {
-        Schema::create('nova_comments', function (Blueprint $table) {
+        Schema::create('nova_messages', function (Blueprint $table) {
             $table->increments('id');
-            $table->morphs('commentable');
-            $table->unsignedInteger('commenter_id')->nullable();
-            $table->text('comment');
+            $table->morphs('messagble');
+            $table->unsignedInteger('messager_id')->nullable();
+            $table->text('message');
             $table->timestamps();
         });
     }
@@ -25,6 +25,6 @@ class CreateCommentsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('nova_comments');
+        Schema::dropIfExists('nova_messages');
     }
 }

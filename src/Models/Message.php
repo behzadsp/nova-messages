@@ -2,20 +2,20 @@
 
 declare(strict_types=1);
 
-namespace KirschbaumDevelopment\NovaComments\Models;
+namespace BehzadSp\NovaMessages\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 
-class Comment extends Model
+class Message extends Model
 {
     /**
      * The table associated with the model.
      *
      * @var string
      */
-    protected $table = 'nova_comments';
+    protected $table = 'nova_messages';
 
     /**
      * The "booting" method of the model.
@@ -25,9 +25,9 @@ class Comment extends Model
         parent::boot();
 
         static::creating(
-            function ($comment): void {
+            function ($message): void {
                 if (auth()->check()) {
-                    $comment->commenter_id = auth()->id();
+                    $message->messager_id = auth()->id();
                 }
             }
         );
@@ -36,7 +36,7 @@ class Comment extends Model
     /**
      * @return MorphTo
      */
-    public function commentable(): MorphTo
+    public function messagble(): MorphTo
     {
         return $this->morphTo();
     }
@@ -44,8 +44,8 @@ class Comment extends Model
     /**
      * @return BelongsTo
      */
-    public function commenter(): BelongsTo
+    public function messager(): BelongsTo
     {
-        return $this->belongsTo(config('auth.providers.users.model'), 'commenter_id');
+        return $this->belongsTo(config('auth.providers.users.model'), 'messager_id');
     }
 }

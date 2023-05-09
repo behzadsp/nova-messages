@@ -2,18 +2,18 @@
 
 declare(strict_types=1);
 
-namespace KirschbaumDevelopment\NovaComments;
+namespace BehzadSp\NovaMessages;
 
 use Laravel\Nova\ResourceTool;
 
-class Commenter extends ResourceTool
+class Messager extends ResourceTool
 {
     /**
      * Get the displayable name of the resource tool.
      */
     public function name(): string
     {
-        return 'Commenter';
+        return 'Messager';
     }
 
     /**
@@ -21,6 +21,6 @@ class Commenter extends ResourceTool
      */
     public function component(): string
     {
-        return 'commenter';
+        return 'messager';
     }
 }

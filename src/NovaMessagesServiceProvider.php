@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace KirschbaumDevelopment\NovaComments;
+namespace BehzadSp\NovaMessages;
 
 use Illuminate\Support\ServiceProvider;
-use KirschbaumDevelopment\NovaComments\Nova\Comment;
+use BehzadSp\NovaMessages\Nova\Message;
 use Laravel\Nova\Nova;
 
-class NovaCommentsServiceProvider extends ServiceProvider
+class NovaMessagesServiceProvider extends ServiceProvider
 {
     /**
      * Bootstrap any application services.
@@ -25,7 +25,7 @@ class NovaCommentsServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->mergeConfigFrom(__DIR__.'/../config/nova-comments.php', 'nova-comments');
+        $this->mergeConfigFrom(__DIR__.'/../config/nova-messages.php', 'nova-messages');
     }
 
     /**
@@ -35,7 +35,7 @@ class NovaCommentsServiceProvider extends ServiceProvider
     {
         $this->publishes(
             [
-                __DIR__.'/../config/nova-comments.php' => config_path('nova-comments.php'),
+                __DIR__.'/../config/nova-messages.php' => config_path('nova-messages.php'),
             ]
         );
     }
@@ -53,12 +53,12 @@ class NovaCommentsServiceProvider extends ServiceProvider
      */
     protected function nova(): void
     {
-        Nova::resources([Comment::class]);
+        Nova::resources([Message::class]);
 
         Nova::serving(
             function (): void {
-                Nova::script('commentable', __DIR__.'/../dist/js/tool.js');
-                Nova::style('commentable', __DIR__.'/../dist/css/tool.css');
+                Nova::script('messagble', __DIR__.'/../dist/js/tool.js');
+                Nova::style('messagble', __DIR__.'/../dist/css/tool.css');
             }
         );
     }
